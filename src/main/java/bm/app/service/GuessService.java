@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
 
 import static bm.app.config.ConstantValues.*;
 
@@ -21,37 +23,39 @@ public class GuessService {
     private static final Logger logger = LoggerFactory.getLogger(GuessService.class);
 
 
-    public Connection getConnection(){
+    public Connection getConnection() {
         Connection connection = Connector.createConnection(DEFAULT_DRIVER, DEFAULT_URL, DEFAULT_USERNAME, DEFAULT_PASSWORD);
-        if (connection == null){
+        if (connection == null) {
             logger.error("Cannot get the connection.");
             return null;
         }
         return connection;
     }
 
-    public boolean insert(Guess guess){
+    public boolean insert(Guess guess) {
         String sql = "insert into words (word, number) values (?, ?)";
         try {
             PreparedStatement preparedStatement = getConnection().prepareStatement(sql);
-            preparedStatement.setString(1, guess.getWord());
-            preparedStatement.setInt(2, guess.getNumber());
+            preparedStatement.setString(1, guess.getWord().orElse("Default"));
+            preparedStatement.setInt(2, guess.getNumber().orElse(1));
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             logger.error("Cannot insert the record.");
             e.printStackTrace();
             return false;
         }
+
+
         return true;
     }
 
-    public List<Guess> selectAllRecords(){
+    public List<Guess> selectAllRecords() {
         List<Guess> list = new ArrayList();
         String sql = "select id, word, number from words";
         try {
             PreparedStatement preparedStatement = getConnection().prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 Guess guess = new Guess();
                 guess.setId(resultSet.getInt("id"));
                 guess.setWord(resultSet.getString("word"));

@@ -5,12 +5,17 @@
     <title>Title</title>
 </head>
 <body>
+<form action="start" method="post">
 <div id="header">Welcome to the Guessing Words game</div>
 <div id="subheader">You will be asked to provide a series of words and assign a number to them. <br>
                     Once this is done, you will have to guess what word you assigned to a number <br>
-                    that will be randomly displayed.
+                    that will be randomly displayed.<br>
 </div>
-<form action="start" method="post">
+<div class="line">------------------------------</div>
+<div class="subheader">Decide how many records you wish to save before you start assigning words to numbers:</div>
+<input type="text" name="rounds" placeholder="Rounds">
+<div class="line">------------------------------</div>
+
     <input type="submit" value="Start the game">
 </form>
 

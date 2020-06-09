@@ -1,15 +1,17 @@
 package bm.app.model;
 
+import java.util.Optional;
+
 public class Guess {
 
     private int id;
     private String word;
-    private int number;
+    private Integer number;
 
     public Guess() {
     }
 
-    public Guess(String word, int number){
+    public Guess(String word, Integer number){
         this.word = word;
         this.number = number;
     }
@@ -22,16 +24,16 @@ public class Guess {
         this.id = id;
     }
 
-    public String getWord() {
-        return word;
+    public Optional<String> getWord() {
+        return Optional.ofNullable(word);
     }
 
     public void setWord(String word) {
         this.word = word;
     }
 
-    public int getNumber() {
-        return number;
+    public Optional<Integer> getNumber() {
+        return Optional.ofNullable(number);
     }
 
     public void setNumber(int number) {

@@ -47,15 +47,15 @@ public class GuessService {
 
     public List<Guess> selectAllRecords(){
         List<Guess> list = new ArrayList();
-        Guess guess = new Guess();
-        String sql = "select * from words";
+        String sql = "select id, word, number from words";
         try {
             PreparedStatement preparedStatement = getConnection().prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
+                Guess guess = new Guess();
                 guess.setId(resultSet.getInt("id"));
                 guess.setWord(resultSet.getString("word"));
-                guess.setId(resultSet.getInt("number"));
+                guess.setNumber(resultSet.getInt("number"));
                 list.add(guess);
             }
         } catch (SQLException e) {

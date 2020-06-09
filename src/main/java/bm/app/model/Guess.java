@@ -6,6 +6,9 @@ public class Guess {
     private String word;
     private int number;
 
+    public Guess() {
+    }
+
     public Guess(String word, int number){
         this.word = word;
         this.number = number;

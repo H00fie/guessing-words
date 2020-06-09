@@ -4,13 +4,18 @@ import bm.app.config.Connector;
 import bm.app.model.Guess;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static bm.app.config.ConstantValues.*;
 
+@Service
 public class GuessService {
 
     private static final Logger logger = LoggerFactory.getLogger(GuessService.class);
@@ -38,5 +43,26 @@ public class GuessService {
             return false;
         }
         return true;
+    }
+
+    public List<Guess> selectAllRecords(){
+        List<Guess> list = new ArrayList();
+        Guess guess = new Guess();
+        String sql = "select * from words";
+        try {
+            PreparedStatement preparedStatement = getConnection().prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                guess.setId(resultSet.getInt("id"));
+                guess.setWord(resultSet.getString("word"));
+                guess.setId(resultSet.getInt("number"));
+                list.add(guess);
+            }
+        } catch (SQLException e) {
+            logger.error("Could not get records.");
+            e.printStackTrace();
+        }
+        return list;
+
     }
 }

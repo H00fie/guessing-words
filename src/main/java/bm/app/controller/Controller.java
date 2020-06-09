@@ -2,9 +2,12 @@ package bm.app.controller;
 
 import bm.app.model.Guess;
 import bm.app.service.GuessService;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Optional;
 
 @org.springframework.stereotype.Controller
 public class Controller {
@@ -29,7 +32,8 @@ public class Controller {
 
     @PostMapping("firstword")
     public String firstGuessPage(@RequestParam String word,
-                                 @RequestParam int number){
+                                 @RequestParam int number,
+                                 Model model){
 
         Guess guess = new Guess();
         guess.setWord(word);
@@ -39,6 +43,9 @@ public class Controller {
             this.numberOfRounds--;
             return "start";
         }else {
+            Optional<String> selectedWord = guessService.selectWordByNumber();
+            String resultWord = String.valueOf(selectedWord);
+            model.addAttribute("randomword", resultWord);
             return "firstword";
         }
     }

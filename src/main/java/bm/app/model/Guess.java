@@ -24,16 +24,16 @@ public class Guess {
         this.id = id;
     }
 
-    public Optional<String> getWord() {
-        return Optional.ofNullable(word);
+    public String getWord() {
+        return word;
     }
 
     public void setWord(String word) {
         this.word = word;
     }
 
-    public Optional<Integer> getNumber() {
-        return Optional.ofNullable(number);
+    public Integer getNumber() {
+        return number;
     }
 
     public void setNumber(int number) {

@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Optional;
-
 @org.springframework.stereotype.Controller
 public class Controller {
 
@@ -43,9 +41,8 @@ public class Controller {
             this.numberOfRounds--;
             return "start";
         }else {
-            Optional<String> selectedWord = guessService.selectWordByNumber();
-            String resultWord = String.valueOf(selectedWord);
-            model.addAttribute("randomword", resultWord);
+            String selectedWord = guessService.selectWordByNumber();
+            model.addAttribute("randomword", selectedWord);
             return "firstword";
         }
     }

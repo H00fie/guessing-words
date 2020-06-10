@@ -37,8 +37,8 @@ public class GuessService {
         String sql = "insert into words (word, number) values (?, ?)";
         try {
             PreparedStatement preparedStatement = getConnection().prepareStatement(sql);
-            preparedStatement.setString(1, guess.getWord().orElse("Default"));
-            preparedStatement.setInt(2, guess.getNumber().orElse(1));
+            preparedStatement.setString(1, guess.getWord());
+            preparedStatement.setInt(2, guess.getNumber());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             logger.error("Cannot insert the record.");
@@ -71,7 +71,7 @@ public class GuessService {
 
     }
 
-    public Optional<String> selectWordByNumber(){
+    public String selectWordByNumber(){
         List<Guess> resultList = selectAllRecords();
         int randomIndex = new Random().nextInt(resultList.size());
         return resultList.get(randomIndex).getWord();
